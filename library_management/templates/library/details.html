@@ -1,0 +1,13 @@
+{% extends "master.html" %}
+{% block title %}
+  Details about {{ book.book_name }}
+{% endblock %}
+
+{% block content %}
+<div class="mycard">
+  <h1>{{ book.book_name }}</h1>
+  <p>Publisher: {{ book.book_publisher }}</p>
+  <p>Published Date: {{ book.book_publish_date }}</p>
+  <p>Back to <a href="/books/list/">Books List</a></p>
+</div>
+{% endblock %}
