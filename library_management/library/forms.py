@@ -1,8 +1,10 @@
-from django import  forms
-from library.models import *
+from django import forms
+from django.contrib.auth.models import User
+from . import models
 
-
-class addbookForm(forms.ModelForm):
-    class Meta:
-        model=Books
-        fields=('id','book_name','book_publisher','book_publish_date')
+class IssueBookForm(forms.Form):
+    isbn2 = forms.ModelChoiceField(queryset=models.Book.objects.all(), empty_label="Book Name [ISBN]", to_field_name="isbn", label="Book (Name and ISBN)")
+    name2 = forms.ModelChoiceField(queryset=models.Student.objects.all(), empty_label="Name [Branch] [Class] [Roll No]", to_field_name="user", label="Student Details")
+    
+    isbn2.widget.attrs.update({'class': 'form-control'})
+    name2.widget.attrs.update({'class':'form-control'})

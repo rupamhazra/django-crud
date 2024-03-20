@@ -1,19 +1,26 @@
 from django.db import models
-from student.models import student
+from student.models import Student
+from datetime import datetime,timedelta
 
 # Create your models here.
-class Books(models.Model):
-  book_name= models.CharField(max_length=255)
-  book_publisher= models.CharField(max_length=255)
-  book_publish_date=models.DateField(max_length=255)
-  class Meta:
-        db_table = 'books'
+class Book(models.Model):
+    name = models.CharField(max_length=200)
+    author = models.CharField(max_length=200)
+    isbn = models.PositiveIntegerField()
+    category = models.CharField(max_length=50)
 
+    def __str__(self):
+      return str(self.name) + " ["+str(self.isbn)+']'
+    class Meta:
+      db_table = 'books'
 
+def expiry():
+    return datetime.today() + timedelta(days=15)
 class Issue(models.Model):
-    book = models.ForeignKey(Books, on_delete=models.CASCADE,related_name='book',blank=True,null=True)
-    issue_date = models.DateField()
-    student = models.ForeignKey(student, on_delete=models.CASCADE,related_name='student',blank=True,null=True)
+    student_id = models.CharField(max_length=100, blank=True) 
+    isbn = models.CharField(max_length=13)
+    issued_date = models.DateField(auto_now=True)
+    expiry_date = models.DateField(default=expiry)
     class Meta:
           db_table='issue'
 
